@@ -1,9 +1,6 @@
 package control;
 
 import library.MQTTPublisher;
-import org.eclipse.paho.client.mqttv3.MqttException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -19,7 +16,6 @@ import java.awt.event.ActionListener;
  * @version 1.0
  */
 public class MenuController extends JMenuBar implements ActionListener {
-	private static final Logger logger = LoggerFactory.getLogger(MenuController.class);
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
@@ -36,12 +32,12 @@ public class MenuController extends JMenuBar implements ActionListener {
 	}
 
 	private void startMQTTPublisher() {
-		PublisherController.startMQTTPublisher();
-		firePropertyChange("status", null, "MQTT connected");
+		MQTTPublisher.getInstance().startMQTTPublisher();
+		Blackboard.getInstance().updateStatusLabel("MQTT connected");
 	}
 
 	private void stopMQTTPublisher() {
-		PublisherController.stopMQTTPublisher();
-		firePropertyChange("status", null, "MQTT disconnected");
+		MQTTPublisher.getInstance().stopMQTTPublisher();
+		Blackboard.getInstance().updateStatusLabel("MQTT disconnected");
 	}
 }
