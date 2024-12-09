@@ -20,7 +20,7 @@ public class MQTTPublisher implements PropertyChangeListener {
     private static final Logger logger = LoggerFactory.getLogger(MQTTPublisher.class);
     private static MQTTPublisher instance;
     private final String broker = "tcp://test.mosquitto.org:1883";
-    private final String topic = "aquarium/commands";
+    private final String topic = "509/aquarium/commands";
     private static MqttClient client;
 
     public static synchronized MQTTPublisher getInstance() {
@@ -51,7 +51,7 @@ public class MQTTPublisher implements PropertyChangeListener {
             MqttConnectOptions options = new MqttConnectOptions();
             options.setAutomaticReconnect(true);
             options.setCleanSession(true);
-            options.setConnectionTimeout(10);
+            options.setConnectionTimeout(30);
 
             client.connect(options);
             logger.info("MQTTPublisher connected to broker and ready to publish on topic: {}", topic);

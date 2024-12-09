@@ -1,9 +1,5 @@
 package control;
 
-import library.MQTTPublisher;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -17,8 +13,6 @@ import java.awt.*;
  * @version 1.0
  */
 public class Main extends JFrame {
-	private static final Logger logger = LoggerFactory.getLogger(Main.class);
-
 	public Main() {
 		super("Aquarium Control Panel");
 
@@ -31,7 +25,9 @@ public class Main extends JFrame {
 		AquariumPanel aquariumPanel = new AquariumPanel();
 		add(aquariumPanel, BorderLayout.CENTER);
 
-		add(createStatusPanel(), BorderLayout.SOUTH);
+		StatusBarPanel statusBarPanel = new StatusBarPanel("Not connected");
+		add(statusBarPanel, BorderLayout.SOUTH);
+		Blackboard.getInstance().addPropertyChangeListener(statusBarPanel);
 
 		setSize(600, 400);
 		setLocationRelativeTo(null);
@@ -55,16 +51,6 @@ public class Main extends JFrame {
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.add(fileMenu);
 		return menuBar;
-	}
-
-	private JPanel createStatusPanel() {
-		JPanel statusPanel = new JPanel();
-		JLabel statusLabel = new JLabel("Status: Not connected");
-		statusPanel.add(statusLabel);
-
-		addPropertyChangeListener("status", evt -> statusLabel.setText("Status: " + evt.getNewValue()));
-
-		return statusPanel;
 	}
 
 	public static void main(String[] args) {

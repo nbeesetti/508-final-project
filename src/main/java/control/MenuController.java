@@ -33,6 +33,7 @@ public class MenuController extends JMenuBar implements ActionListener {
 
 	private void startMQTTPublisher() {
 		MQTTPublisher.getInstance().startMQTTPublisher();
+		Blackboard.getInstance().addPropertyChangeListener(MQTTPublisher.getInstance());
 		Blackboard.getInstance().updateStatusLabel("MQTT connected");
 	}
 
