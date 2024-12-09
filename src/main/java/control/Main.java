@@ -17,7 +17,7 @@ public class Main extends JFrame {
 		super("Aquarium Control Panel");
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLayout(new BorderLayout());
+		setLayout(new BorderLayout(10, 10));
 
 		MenuController menuController = new MenuController();
 		setJMenuBar(createMenuBar(menuController));

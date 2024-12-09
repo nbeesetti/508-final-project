@@ -1,6 +1,7 @@
 package control;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -17,10 +18,13 @@ public class StatusBarPanel extends JPanel implements PropertyChangeListener {
 	private JLabel statusLabel;
 	
 	public StatusBarPanel(String status) {
-		setPreferredSize(new Dimension(getWidth(), 22));
-		setLayout(new GridLayout(1, 1));
-		setBorder(BorderFactory.createLineBorder(Color.GRAY));
-		statusLabel = new JLabel("Status: " + status);
+		setPreferredSize(new Dimension(getWidth(), 35));
+		setLayout(new FlowLayout(FlowLayout.CENTER));
+		setBorder(BorderFactory.createCompoundBorder(
+				BorderFactory.createLineBorder(Color.GRAY),
+				new EmptyBorder(5, 5, 5, 5)
+		));
+		statusLabel = new JLabel("Status: " + status, JLabel.CENTER);
 		add(statusLabel);
 	}
 
