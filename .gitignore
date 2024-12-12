@@ -17,7 +17,6 @@ src/main/resources/logback-secret.properties
 .mtj.tmp/
 
 # Package Files #
-*.jar
 *.war
 *.nar
 *.ear
