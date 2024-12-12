@@ -6,6 +6,9 @@
 - Saanvi Dua
 - Yayun Tan
 
+### Link to Aquarium XR Code
+https://github.com/JackOrt/BoidsXR/tree/main
+
 ### Diagrams
 ![UML Diagram for Java Aquarium Controls](https://github.com/nbeesetti/508-final-project/blob/5f4868e8c8f5e53b0e69ffa1bf80c14b2ae1ec55/UML-Java.png)
 
