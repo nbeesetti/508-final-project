@@ -7,8 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * MenuController class that listens for button clicks and calls the appropriate methods in the Client class.
- * This version supports starting both traditional TCP and MQTT clients.
+ * MenuController class that listens for and handles starting/stopping MQTT Publisher
  * @author Jack Ortega
  * @author Neeraja Beesetti
  * @author Saanvi Dua

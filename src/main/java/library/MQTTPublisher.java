@@ -10,6 +10,7 @@ import java.beans.PropertyChangeListener;
 
 /**
  * MQTTPublisher publishes messages to an MQTT topic.
+ * Singleton so that Unity Aquarium only controlled by one publisher
  * @author Jack Ortega
  * @author Neeraja Beesetti
  * @author Saanvi Dua
