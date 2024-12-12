@@ -1,5 +1,6 @@
 package control;
 
+import library.MQTTPublisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,7 +31,9 @@ public class Blackboard extends PropertyChangeSupport {
 	}
 
 	public void updateStatusLabel(String status) {
-		firePropertyChange("status", null, status);
+		if (MQTTPublisher.getInstance().hasPublisherStarted()) {
+			firePropertyChange("status", null, status);
+		}
 	}
 
 	public void sendCommand(String command) {

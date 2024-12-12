@@ -15,85 +15,84 @@ public class AquariumPanel extends JPanel {
 
 	public AquariumPanel() {
 		setLayout(new BorderLayout(10, 10));
-		setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+		setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		initUI();
 	}
 
 	private void initUI() {
-		JPanel controlPanel = new JPanel();
-		controlPanel.setLayout(new GridBagLayout());
+		setLayout(new BorderLayout(10, 10));
+
+		// Fish panels
+		JPanel fishPanelsContainer = new JPanel();
+		fishPanelsContainer.setLayout(new GridLayout(1, 3, 10, 10));
+
+		// Create fish panels
+		fishPanelsContainer.add(createFishPanel("Swarm 1", 0,"/fish1.png"));
+		fishPanelsContainer.add(createFishPanel("Swarm 2", 1, "/fish2.png"));
+		fishPanelsContainer.add(createFishPanel("Swarm 3", 2, "/fish3.png"));
+
+		add(fishPanelsContainer, BorderLayout.CENTER);
+
+		// Bottom controls
+		JPanel controlsPanel = new JPanel();
+		controlsPanel.setLayout(new GridLayout(3, 1, 10, 10));
+
+		// Background music selection
+		JPanel musicPanel = new JPanel();
+		musicPanel.add(new JLabel("Background Music:"));
+		JComboBox<String> musicDropdown = new JComboBox<>(new String[]{"Bubbles", "Waves"});
+		musicDropdown.addActionListener(e -> handleAction("music " + musicDropdown.getSelectedItem()));
+		musicPanel.add(musicDropdown);
+		controlsPanel.add(musicPanel);
+
+		// Feed fish button
+		JButton feedFishButton = new JButton("Feed Fish");
+		feedFishButton.addActionListener(e -> handleAction("feed"));
+		controlsPanel.add(feedFishButton);
+
+		// Reset aquarium button
+		JButton resetAquariumButton = new JButton("Reset Aquarium");
+		resetAquariumButton.addActionListener(e -> handleAction("reset"));
+		controlsPanel.add(resetAquariumButton);
+
+		// Add controls to the bottom
+		add(controlsPanel, BorderLayout.SOUTH);
+	}
+
+	private JPanel createFishPanel(String label, int swarmIndex, String imagePath) {
+		JPanel fishPanel = new JPanel(new GridBagLayout());
+		fishPanel.setBorder(BorderFactory.createTitledBorder(label));
+
 		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.gridx = 0;
+		gbc.gridy = GridBagConstraints.RELATIVE;
+		gbc.anchor = GridBagConstraints.CENTER;
 		gbc.insets = new Insets(5, 5, 5, 5);
 
-		// Fish Type Selector
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		controlPanel.add(new JLabel("Select Fish Type:"), gbc);
-		JComboBox<String> fishTypeDropdown = new JComboBox<>(new String[]{"Fish 1", "Fish 2", "Fish 3"});
-		fishTypeDropdown.addActionListener(e -> handleAction("fishType:" + fishTypeDropdown.getSelectedItem()));
-		gbc.gridx = 1;
-		controlPanel.add(fishTypeDropdown, gbc);
+		// Fish image
+		fishPanel.add(loadImage(imagePath), gbc);
 
-		// Fish Quantity Slider
-		gbc.gridx = 0;
-		gbc.gridy = 1;
-		controlPanel.add(new JLabel("Set Fish Quantity:"), gbc);
-		JSlider fishQuantitySlider = new JSlider(1, 50, 10);
-		fishQuantitySlider.setMajorTickSpacing(10);
-		fishQuantitySlider.setPaintLabels(true);
-		fishQuantitySlider.setPaintTicks(true);
-		fishQuantitySlider.addChangeListener(e -> handleAction("fishQuantity:" + fishQuantitySlider.getValue()));
-		gbc.gridx = 1;
-		controlPanel.add(fishQuantitySlider, gbc);
+		// Add Fish button
+		JButton addFishButton = new JButton("Add a Fish");
+		addFishButton.addActionListener(e -> handleAction("addFish " + swarmIndex));
+		fishPanel.add(addFishButton, gbc);
 
-		// Feed Fish Button
-		gbc.gridx = 0;
-		gbc.gridy = 2;
-		controlPanel.add(new JLabel("Feed Fish:"), gbc);
-		JButton feedFishButton = new JButton("Feed Now");
-		feedFishButton.addActionListener(e -> handleAction("feedFish"));
-		gbc.gridx = 1;
-		controlPanel.add(feedFishButton, gbc);
+		// Remove Fish button
+		JButton removeFishButton = new JButton("Remove a Fish");
+		removeFishButton.addActionListener(e -> handleAction("removeFish " + swarmIndex));
+		fishPanel.add(removeFishButton, gbc);
 
-		// Music Selector
-		gbc.gridx = 0;
-		gbc.gridy = 3;
-		controlPanel.add(new JLabel("Background Music:"), gbc);
-		JComboBox<String> musicDropdown = new JComboBox<>(new String[]{"Relaxing", "Ambient", "None"});
-		musicDropdown.addActionListener(e -> handleAction("music:" + musicDropdown.getSelectedItem()));
-		gbc.gridx = 1;
-		controlPanel.add(musicDropdown, gbc);
-
-		// Add Fish Button
-		gbc.gridx = 0;
-		gbc.gridy = 4;
-		controlPanel.add(new JLabel("Add New Fish:"), gbc);
-		JButton addFishButton = new JButton("Add Fish");
-		addFishButton.addActionListener(e -> handleAction("addFish"));
-		gbc.gridx = 1;
-		controlPanel.add(addFishButton, gbc);
-
-		// Remove Fish Button
-		gbc.gridx = 0;
-		gbc.gridy = 5;
-		controlPanel.add(new JLabel("Remove Fish:"), gbc);
-		JButton removeFishButton = new JButton("Remove Fish");
-		removeFishButton.addActionListener(e -> handleAction("removeFish"));
-		gbc.gridx = 1;
-		controlPanel.add(removeFishButton, gbc);
-
-		// Reset Aquarium Button
-		gbc.gridx = 0;
-		gbc.gridy = 6;
-		controlPanel.add(new JLabel("Reset Aquarium:"), gbc);
-		JButton resetButton = new JButton("Reset");
-		resetButton.addActionListener(e -> handleAction("resetAquarium"));
-		gbc.gridx = 1;
-		controlPanel.add(resetButton, gbc);
-
-		add(controlPanel, BorderLayout.CENTER);
+		return fishPanel;
 	}
+
+	private JLabel loadImage(String imagePath) {
+		JLabel fishImageLabel = new JLabel();
+		ImageIcon fishIcon = new ImageIcon(getClass().getResource(imagePath));
+		Image scaledImage = fishIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+		fishImageLabel.setIcon(new ImageIcon(scaledImage));
+		return fishImageLabel;
+	}
+
 
 	private void handleAction(String command) {
 		Blackboard.getInstance().sendCommand(command);

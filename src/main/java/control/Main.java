@@ -29,7 +29,7 @@ public class Main extends JFrame {
 		add(statusBarPanel, BorderLayout.SOUTH);
 		Blackboard.getInstance().addPropertyChangeListener(statusBarPanel);
 
-		setSize(600, 400);
+		setSize(600, 500);
 		setLocationRelativeTo(null);
 	}
 

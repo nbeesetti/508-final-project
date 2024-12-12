@@ -37,7 +37,7 @@ public class MenuController extends JMenuBar implements ActionListener {
 	}
 
 	private void stopMQTTPublisher() {
-		MQTTPublisher.getInstance().stopMQTTPublisher();
 		Blackboard.getInstance().updateStatusLabel("MQTT disconnected");
+		MQTTPublisher.getInstance().stopMQTTPublisher();
 	}
 }

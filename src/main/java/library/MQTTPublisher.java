@@ -31,6 +31,10 @@ public class MQTTPublisher implements PropertyChangeListener {
         return instance;
     }
 
+    public boolean hasPublisherStarted() {
+        return client != null && client.isConnected();
+    }
+
     public synchronized void startMQTTPublisher() {
         if (client != null && client.isConnected()) {
             logger.info("MQTT publisher is already running");
